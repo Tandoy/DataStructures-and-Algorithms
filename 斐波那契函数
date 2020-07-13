@@ -29,7 +29,19 @@ public class Main {
 		}
 		return second;
 	}
+		public static int fib3(int n) {
+			// 时间复杂度：O(n)
+			if(n <= 1) return n;
+			int frist = 0;
+			int second = 1;
+			while (n -- > 1){
+				 second += frist;
+				 frist = second - frist;
+			}
+			return second;
+	}
 	public static void main(String[] args) {
-		   System.out.println(fib2(4));
+		   System.out.println(fib2(12));
+		   System.out.println(fib3(12));
  	}
 }
