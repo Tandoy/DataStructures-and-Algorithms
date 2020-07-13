@@ -1,0 +1,74 @@
+package com.tz;
+/*
+ * 动态数组自实现
+ * */
+public class ArrayList {
+	private int size;//数组中所有元素数量
+	private int[] elements;//数组总所有元素
+	private static final int DEAFULT_CAPATICY = 10; //默认动态数组容量为10
+	private static final int DEAFULT_NOT_FOUND = -1; //当前动态数组中无此元素
+	public ArrayList(){
+		this(DEAFULT_CAPATICY);
+	}
+    public ArrayList(int capaticy){
+    	if (capaticy < DEAFULT_CAPATICY) {
+			capaticy = DEAFULT_CAPATICY;
+		}
+    	elements = new int[capaticy];
+	}
+	/*
+	 * 清除所有元素
+	 * */
+   public void clear() {
+	   size = 0;
+   }
+   /*
+	 * 数组元素的数量
+	 * */
+   public int size() {
+	  return size;
+  }
+  /*
+	 * 判断数组是否为空
+	 * */
+   public boolean isEmpty() {
+	  return size == 0;
+   }
+  /*
+   * 获取指定位置的元素
+   * */
+   public int get(int index) {
+	   if(index < 0 || index >= size) {
+		   throw new IndexOutOfBoundsException("index is illegal");
+	   }
+	return elements[index];
+   }
+  /*
+   * 设置指定位置元素并返回原位置元素
+   * */
+   public int set(int index,int element) {
+	   if(index < 0 || index >= size) {
+		   throw new IndexOutOfBoundsException("index is illegal");
+	   }
+	   int old = elements[index];
+	   elements[index] = element;
+	   return old;
+    }
+   /*
+    * 查看指定元素的索引
+    * */
+   public int indexOf(int element) {
+	     for (int i = 0; i < size; i++) {
+			if (elements[i] == element) {
+				return i;
+			}
+	    }
+	     return DEAFULT_NOT_FOUND;
+    }
+   /*
+    * 是否包含当前元素
+    * */
+   public boolean contains(int element) {
+	  return indexOf(element) != DEAFULT_NOT_FOUND;
+  }
+}
