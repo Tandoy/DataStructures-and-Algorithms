@@ -4,9 +4,9 @@ package com.tz;
  * */
 public class ArrayList {
 	private int size;//数组中所有元素数量
-	private int[] elements;//数组总所有元素
+	private int[] elements;//数组
 	private static final int DEAFULT_CAPATICY = 10; //默认动态数组容量为10
-	private static final int DEAFULT_NOT_FOUND = -1; //当前动态数组中无此元素
+	private static final int DEAFULT_NOT_FOUND = -1; //当前动态数组中无此元素返回
 	public ArrayList(){
 		this(DEAFULT_CAPATICY);
 	}
@@ -15,6 +15,35 @@ public class ArrayList {
 			capaticy = DEAFULT_CAPATICY;
 		}
     	elements = new int[capaticy];
+	}
+    private void rangCheckForAdd(int index) {
+ 	   if(index < 0 || index > size) {
+ 		   throw new IndexOutOfBoundsException("index is illegal");
+ 	   }
+    }
+    private void rangCheck(int index) {
+ 	   if(index < 0 || index >= size) {
+ 		   throw new IndexOutOfBoundsException("index is illegal");
+ 	   }
+    }
+    /*
+     * 扩容
+     * */
+    private void ensuerCapaticy(int capaticy) {
+    	int oldCapaticy = elements.length;
+		if (oldCapaticy >= capaticy) {
+			//当前数组已满足，无需扩容
+			return;
+		}else {
+			//扩容
+			int newcapaticy = oldCapaticy + (oldCapaticy >> 1) ; //扩容后数组长度为旧容量1.5倍
+			int[] newElements = new int[newcapaticy];
+			for (int i = 0; i < size; i++) {
+				newElements[i] = elements[i];
+			}
+			elements = newElements;
+			System.out.println(oldCapaticy+"扩容后"+newcapaticy);
+		}
 	}
 	/*
 	 * 清除所有元素
@@ -38,18 +67,14 @@ public class ArrayList {
    * 获取指定位置的元素
    * */
    public int get(int index) {
-	   if(index < 0 || index >= size) {
-		   throw new IndexOutOfBoundsException("index is illegal");
-	   }
+	  rangCheck(index);
 	return elements[index];
    }
   /*
    * 设置指定位置元素并返回原位置元素
    * */
    public int set(int index,int element) {
-	   if(index < 0 || index >= size) {
-		   throw new IndexOutOfBoundsException("index is illegal");
-	   }
+	   rangCheck(index);
 	   int old = elements[index];
 	   elements[index] = element;
 	   return old;
@@ -71,4 +96,42 @@ public class ArrayList {
    public boolean contains(int element) {
 	  return indexOf(element) != DEAFULT_NOT_FOUND;
   }
+   /*
+    * 添加元素
+    * */
+   public void add(int element) {
+	   add(size, element);
+  }
+   public String toString() {
+	   StringBuilder sBuilder = new StringBuilder();
+	   for (int i = 0; i < size; i++) {
+		 sBuilder.append(elements[i]+ " ");
+	}
+	   return sBuilder.toString();
+  }
+
+   /*
+    * 删除指定位置的元素并返回相对应元素
+    * */
+   public int remove(int index) {
+	    rangCheck(index);
+	   int oldElement = elements[index];
+	   for (int i = index + 1; i <= size - 1; i++) {
+		  elements[i-1] = elements[i];
+	}  
+	   size--;
+ 	   return oldElement;
+  }
+   /*
+    * 指定位置添加元素
+    * */
+   public void add(int index,int element) {
+	      rangCheckForAdd(index);
+	      ensuerCapaticy(size + 1); //数组动态扩容
+	      for (int i = size - 1 ; i >= index; i--) {
+			 elements[i+1] = elements[i];
+		}
+	      elements[index] = element;
+	      size++;
+	   }
 }
