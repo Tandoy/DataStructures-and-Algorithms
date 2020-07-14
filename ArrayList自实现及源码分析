@@ -2,19 +2,20 @@ package com.tz;
 /*
  * 动态数组自实现
  * */
-public class ArrayList {
+@SuppressWarnings("unchecked")
+public class ArrayList<E> {
 	private int size;//数组中所有元素数量
-	private int[] elements;//数组
+	private E[] elements;//数组
 	private static final int DEAFULT_CAPATICY = 10; //默认动态数组容量为10
 	private static final int DEAFULT_NOT_FOUND = -1; //当前动态数组中无此元素返回
 	public ArrayList(){
 		this(DEAFULT_CAPATICY);
 	}
-    public ArrayList(int capaticy){
+	public ArrayList(int capaticy){
     	if (capaticy < DEAFULT_CAPATICY) {
 			capaticy = DEAFULT_CAPATICY;
 		}
-    	elements = new int[capaticy];
+    	elements = (E[]) new Object[capaticy];
 	}
     private void rangCheckForAdd(int index) {
  	   if(index < 0 || index > size) {
@@ -37,11 +38,11 @@ public class ArrayList {
 		}else {
 			//扩容
 			int newcapaticy = oldCapaticy + (oldCapaticy >> 1) ; //扩容后数组长度为旧容量1.5倍
-			int[] newElements = new int[newcapaticy];
+			Object[] newElements = new Object[newcapaticy];
 			for (int i = 0; i < size; i++) {
 				newElements[i] = elements[i];
 			}
-			elements = newElements;
+			elements = (E[]) newElements;
 			System.out.println(oldCapaticy+"扩容后"+newcapaticy);
 		}
 	}
@@ -66,23 +67,23 @@ public class ArrayList {
   /*
    * 获取指定位置的元素
    * */
-   public int get(int index) {
+   public E get(int index) {
 	  rangCheck(index);
 	return elements[index];
    }
   /*
    * 设置指定位置元素并返回原位置元素
    * */
-   public int set(int index,int element) {
+   public E set(int index,E element) {
 	   rangCheck(index);
-	   int old = elements[index];
+	   E old = elements[index];
 	   elements[index] = element;
 	   return old;
     }
    /*
     * 查看指定元素的索引
     * */
-   public int indexOf(int element) {
+   public int indexOf(E element) {
 	     for (int i = 0; i < size; i++) {
 			if (elements[i] == element) {
 				return i;
@@ -93,13 +94,13 @@ public class ArrayList {
    /*
     * 是否包含当前元素
     * */
-   public boolean contains(int element) {
+   public boolean contains(E element) {
 	  return indexOf(element) != DEAFULT_NOT_FOUND;
   }
    /*
     * 添加元素
     * */
-   public void add(int element) {
+   public void add(E element) {
 	   add(size, element);
   }
    public String toString() {
@@ -113,9 +114,9 @@ public class ArrayList {
    /*
     * 删除指定位置的元素并返回相对应元素
     * */
-   public int remove(int index) {
+   public E remove(int index) {
 	    rangCheck(index);
-	   int oldElement = elements[index];
+	   E oldElement = elements[index];
 	   for (int i = index + 1; i <= size - 1; i++) {
 		  elements[i-1] = elements[i];
 	}  
@@ -125,7 +126,7 @@ public class ArrayList {
    /*
     * 指定位置添加元素
     * */
-   public void add(int index,int element) {
+   public void add(int index,E element) {
 	      rangCheckForAdd(index);
 	      ensuerCapaticy(size + 1); //数组动态扩容
 	      for (int i = size - 1 ; i >= index; i--) {
