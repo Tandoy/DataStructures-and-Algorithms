@@ -50,6 +50,10 @@ public class ArrayList<E> {
 	 * 清除所有元素
 	 * */
    public void clear() {
+	   for (int i = 0; i < size; i++) {
+		elements[i] = null;
+		
+	}
 	   size = 0;
    }
    /*
@@ -84,11 +88,20 @@ public class ArrayList<E> {
     * 查看指定元素的索引
     * */
    public int indexOf(E element) {
-	     for (int i = 0; i < size; i++) {
-			if (elements[i] == element) {
+	   if (element == null) {
+		   for (int i = 0; i < size; i++) {
+			if (elements[i] == null) {
+				//找出第一个为空的对象即可
+				return i;
+			}
+		}
+	}else {
+		for (int i = 0; i < size; i++) {
+			if (elements[i].equals(element)) {
 				return i;
 			}
 	    }
+	} 
 	     return DEAFULT_NOT_FOUND;
     }
    /*
@@ -117,10 +130,11 @@ public class ArrayList<E> {
    public E remove(int index) {
 	    rangCheck(index);
 	   E oldElement = elements[index];
-	   for (int i = index + 1; i <= size - 1; i++) {
+	   for (int i = index + 1; i < size; i++) {
 		  elements[i-1] = elements[i];
 	}  
 	   size--;
+	   elements[size] = null;
  	   return oldElement;
   }
    /*
@@ -129,10 +143,11 @@ public class ArrayList<E> {
    public void add(int index,E element) {
 	      rangCheckForAdd(index);
 	      ensuerCapaticy(size + 1); //数组动态扩容
-	      for (int i = size - 1 ; i >= index; i--) {
-			 elements[i+1] = elements[i];
+	      for (int i = size ; i > index; i--) {
+			 elements[i] = elements[i - 1];
 		}
 	      elements[index] = element;
 	      size++;
 	   }
 }
+
