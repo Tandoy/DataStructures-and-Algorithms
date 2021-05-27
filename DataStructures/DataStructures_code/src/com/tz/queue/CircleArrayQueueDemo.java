@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class CircleArrayQueueDemo {
     public static void main(String[] args) {
         // 进行测试
-        ArrayQueue queue = new ArrayQueue(4);
+        ArrayQueue queue = new ArrayQueue(4); // 这里环形队列大小实际上有效元素大小只有3，预留了一个位置给到rear以及front
         char key = ' '; //接收用户输入
         Scanner scanner = new Scanner(System.in);//
         boolean loop = true;
