@@ -1,5 +1,8 @@
 package com.tz.LinkedList;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * 使用带 head 头的单向链表实现 –水浒英雄排行榜管理完成对英雄人物的增删改查操
  * 先创建一个head头节点
@@ -39,6 +42,10 @@ public class SingleLinkedListDemo {
         System.out.println("单链表中有效节点=" + getLength(singleLinkedList.getHead()));
         // 测试查找单链表中的倒数第k个结点
         System.out.println(findLastIndexNode(singleLinkedList.getHead(), 1));
+        // 测试单链表反转
+        reverseList(singleLinkedList.getHead());
+        System.out.println("-----------单链表反转后-----------");
+        singleLinkedList.list();
     }
 
     // 以下是单链表各大厂的面试题
@@ -92,6 +99,34 @@ public class SingleLinkedListDemo {
             }
         }
         return cur;
+    }
+
+    /**
+     * 单链表的反转【腾讯面试题】
+     * 思路：1.创建一个虚拟节点(reverseHead)用来冒充头节点
+     * 2.循环遍历就旧链表，将每个有效节点取出放在虚拟节点的下一个（其实就是每遍历到一个有效节点就让它在虚拟节点的下一个已达到反转的效果）
+     * 3.将旧链表头节点指向虚拟节点的下一个节点，将虚拟节点的next置空
+     *
+     * @param head
+     */
+    public static void reverseList(HeroNode head) {
+        // 0.首先判断当前链表是否为空 || 当前链表只有一个节点，若为空则无需反转直接返回
+        if (head.next == null || head.next.next == null) {
+            return;
+        }
+        // 1.创建一个虚拟节点用来冒充头节点
+        HeroNode reverseHead = new HeroNode(0, "", "");
+        HeroNode cur = head.next;// 定义辅助变量来进行循环遍历
+        HeroNode next = null;// 用来暂时存放遍历到的当前节点的下一个有效节点
+        // TODO 暂未理解！！！
+        while (cur != null) { // 还存在有效节点继续遍历
+            next = cur.next; // 先把下一个节点暂存，因为是单链表当当前节点取出后无法找到下一节点
+            cur.next = reverseHead.next;//将 cur 的下一个节点指向新的链表的最前端
+            reverseHead.next = cur; //将 cur 连接到新的链表上
+            cur = next;//让 cur 后移
+        }
+        //将 head.next 指向 reverseHead.next , 实现单链表的反转
+        head.next = reverseHead.next;
     }
 
     //定义 SingleLinkedList 管理我们的英雄
