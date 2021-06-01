@@ -1,7 +1,6 @@
 package com.tz.LinkedList;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Stack;
 
 /**
  * 使用带 head 头的单向链表实现 –水浒英雄排行榜管理完成对英雄人物的增删改查操
@@ -46,6 +45,8 @@ public class SingleLinkedListDemo {
         reverseList(singleLinkedList.getHead());
         System.out.println("-----------单链表反转后-----------");
         singleLinkedList.list();
+        System.out.println("-----------从尾到头打印单链表采用Stack-----------");
+        reversePrint(singleLinkedList.head);
     }
 
     // 以下是单链表各大厂的面试题
@@ -127,6 +128,31 @@ public class SingleLinkedListDemo {
         }
         //将 head.next 指向 reverseHead.next , 实现单链表的反转
         head.next = reverseHead.next;
+    }
+
+    /**
+     * 从尾到头打印单链表 【百度，要求方式 1：反向遍历 。 方式 2：Stack栈】
+     * 思路：1.利用上面的单链表反转，但这样会破坏原有链表
+     *      2.可以利用栈这个数据结构，将各个节点压入到栈中，然后利用栈的先进后出的特点，就实现了逆序打印的效果
+     *
+     * @param head
+     */
+    public static void reversePrint(HeroNode head) {
+        if (head.next == null) {
+            return;// 空单链表无需逆序
+        }
+        // 定义辅助指针
+        HeroNode cur = head.next;
+        // 创建栈
+        Stack<HeroNode> stack = new Stack<>();
+        while (cur != null) {
+            stack.push(cur);
+            cur = cur.next; // 指针后移
+        }
+        // 出栈逆序打印
+        while (stack.size() > 0) {
+            System.out.println(stack.pop());
+        }
     }
 
     //定义 SingleLinkedList 管理我们的英雄
