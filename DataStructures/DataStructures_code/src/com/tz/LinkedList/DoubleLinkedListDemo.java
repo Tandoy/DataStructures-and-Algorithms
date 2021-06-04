@@ -14,7 +14,7 @@ package com.tz.LinkedList;
  * (3)temp.pre.next = temp.next
  * (4)temp.next.pre = temp.pre;
  */
-public class DoubleLinkedListDem {
+public class DoubleLinkedListDemo {
     public static void main(String[] args) {
         // 测试
         HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
