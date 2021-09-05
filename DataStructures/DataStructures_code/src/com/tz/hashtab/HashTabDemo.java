@@ -271,6 +271,7 @@ class EmpLinkedList {
             prev.next = emp;
             return;
         }
+        //要插入雇员在链表中间
         prev.next = emp;
         emp.next = curr;
     }
